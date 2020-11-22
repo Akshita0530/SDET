@@ -1,98 +1,43 @@
-package Selenium_TestNG_xml_Activities;
+package Selenium_Live_Project_LMS;
 
+import org.testng.annotations.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.interactions.Actions;
-import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
-import junit.framework.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterMethod;
 
 public class Activity4 {
-	WebDriver driver;
-    Actions builder;
+	public WebDriver driver;
+	 @BeforeMethod
+	  public void OpenURL() {
+	  driver= new FirefoxDriver();
+	  driver.get("https://alchemy.hguy.co/lms"); 
+
+	  }
+
+  @Test
+  public void VerifyTitle() {
+	  driver.findElement(By.xpath("html/body/div/div/div/div/main/article/div/section[4]/div[2]/div/div[2]/div/div/div/div[2]/article/div[2]/p[2]/a")).click();
+	  String ExpectedTitle = "Email Marketing Strategies – Alchemy LMS";
+	  String ActualTitle = driver.getTitle();
+	  if (ExpectedTitle.equals(ActualTitle)) 
+	  {
+		  System.out.println ("The Title of the Page matches the expected");
+		  driver.close();
+	  }
+	  else 
+	  {
+		  
+		  System.out.println ("The Title of the Page does not match");  
+	  }
+  }
+  
+  
  
-    @BeforeClass
-    public void beforeClass() {
-        driver = new FirefoxDriver();
-        builder = new Actions(driver);
- 
-        //Open browser
-        driver.get("https://www.training-support.net/selenium/sliders");
-    }
- 
-    @Test
-    public void sliderToMiddleTest() {
-        //Find slider
-        WebElement slider = driver.findElement(By.id("slider"));
-        //Clicking on the slider element moves it to the middle
-        slider.click();
-        
-        String volumeLevel = driver.findElement(By.cssSelector("span#value")).getText();
-        Reporter.log("Mid value: " + volumeLevel);
-        
-        Assert.assertEquals(volumeLevel, "50");
-    }
-    
-    @Test
-    public void sliderToMaxTest() {
-        //Find slider
-        WebElement slider = driver.findElement(By.id("slider"));
-        //Drag the slider
-        builder.clickAndHold(slider).moveByOffset(75, 0).release().build().perform();
-        
-        String volumeLevel = driver.findElement(By.cssSelector("span#value")).getText();
-        Reporter.log("Max value: " + volumeLevel);
-        
-        Assert.assertEquals(volumeLevel, "100");
-    }
-    
-    @Test
-    public void sliderToMinTest() {
-        //Find slider
-        WebElement slider = driver.findElement(By.id("slider"));
-        //Drag the slider
-        builder.clickAndHold(slider).moveByOffset(-75, 0).release().build().perform();
-        
-        String volumeLevel = driver.findElement(By.cssSelector("span#value")).getText();
-        Reporter.log("Min value: " + volumeLevel);
-        
-        Assert.assertEquals(volumeLevel, "0");
-    }
-    
-    @Test
-    public void sliderTo30Test() {
-        //Find slider
-        WebElement slider = driver.findElement(By.id("slider"));
-        //Drag the slider
-        builder.clickAndHold(slider).moveByOffset(-30, 0).release().build().perform();
-        
-        String volumeLevel = driver.findElement(By.cssSelector("span#value")).getText();
-        Reporter.log("Min value: " + volumeLevel);
-        
-        Assert.assertEquals(volumeLevel, "30");
-    }
-    
-    @Test
-    public void sliderTo80Test() {
-        //Find slider
-        WebElement slider = driver.findElement(By.id("slider"));
-        //Drag the slider
-        builder.clickAndHold(slider).moveByOffset(45, 0).release().build().perform();
-        
-        String volumeLevel = driver.findElement(By.cssSelector("span#value")).getText();
-        Reporter.log("Min value: " + volumeLevel);
-        
-        Assert.assertEquals(volumeLevel, "80");
-    }
- 
-    @AfterClass
-    public void afterClass() {
-        //Close browser
-        driver.close();
-    }
+  @AfterMethod
+  public void afterMethod() {
+	
+  }
+
 }

@@ -1,119 +1,31 @@
-package Selenium_TestNG_xml_Activities;
+package Selenium_Live_Project_LMS;
 
-import org.openqa.selenium.Alert;
+import org.testng.annotations.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
-import junit.framework.Assert;
 
 public class Activity3 {
-	WebDriver driver;
-	 
-    @BeforeClass
-    public void setUp() {
-        //Create a new instance of the Firefox driver
-        driver = new FirefoxDriver();
+  
+	public WebDriver driver;
+	
+	 @BeforeMethod
+	  public void OpenURL() {
+	  driver= new FirefoxDriver();
+	  driver.get("https://alchemy.hguy.co/lms"); 
+  }
+  @Test
+  public void VerifyFirstInfoBox() {
+	  
+	  String ExpectedHeading = " Actionable Training ";
+   	  String ActualHeading = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/main/article/div/section[2]/div[2]/div[1]/div[2]/div/div/div/div/div[2]/h3")).getAttribute("innerHTML");
+   	  if (ActualHeading.equals(ExpectedHeading)) {
+   	
+   		 System.out.println("The Info Box Title is verified");
+   	     driver.close();
+   	     
+   	 }
+  }
  
-        Reporter.log("Starting Test |");
-        //Open browser
-        driver.get("https://www.training-support.net/selenium/javascript-alerts");
-        Reporter.log("Opened Browser |");
- 
-        //Print title of page
-        Reporter.log("Page title is " + driver.getTitle() + " |");
-    }
-    
-    @BeforeMethod
-    public void beforeMethod() {
-        Reporter.log("Test Case Setup started |");
-        driver.switchTo().defaultContent();
-    }
- 
-    @Test(priority = 0)
-    public void simpleAlertTestCase() {
-        Reporter.log("simpleAlertTestCase() started |");
-        //Click the button to open a simple alert
-        driver.findElement(By.id("simple")).click();
-        Reporter.log("Simple Alert opened |");
- 
-        //Switch to alert window
-        Alert simpleAlert = driver.switchTo().alert();
-        Reporter.log("Switched foucs to alert |");
- 
-        //Get text in the alert box and print it
-        String alertText = simpleAlert.getText();
-        Reporter.log("Alert text is: " + alertText + " |");
-        
-        //Assertion
-        Assert.assertEquals("This is a JavaScript Alert!", alertText);
- 
-        simpleAlert.accept();
-        Reporter.log("Alert closed");
- 
-        Reporter.log("Test case ended |");
-    }
- 
-    @Test(priority = 1)
-    public void confirmAlertTestCase() {
-        Reporter.log("confirmAlertTestCase() started |");
-        //Click the button to open a simple alert
-        driver.findElement(By.id("confirm")).click();
-        Reporter.log("Confirm Alert opened |");
- 
-        //Switch to alert window
-        Alert confirmAlert = driver.switchTo().alert();
-        Reporter.log("Switched foucs to alert |");
- 
-        //Get text in the alert box and print it
-        String alertText = confirmAlert.getText();
-        Reporter.log("Alert text is: " + alertText + " |");
-        
-        //Assertion
-        Assert.assertEquals("This is a JavaScript Confirmation!", alertText);
- 
-        confirmAlert.accept();
-        Reporter.log("Alert closed |");
- 
-        Reporter.log("Test case ended |");
-    }
- 
-    @Test(priority = 2)
-    public void promptAlertTestCase() {
-        Reporter.log("promptAlertTestCase() started |");
-        //Click the button to open a simple alert
-        driver.findElement(By.id("prompt")).click();
-        Reporter.log("Prompt Alert opened |");
- 
-        //Switch to alert window
-        Alert promptAlert = driver.switchTo().alert();
-        Reporter.log("Switched foucs to alert |");
- 
-        //Get text in the alert box and print it
-        String alertText = promptAlert.getText();
-        Reporter.log("Alert text is: " + alertText + " |");
- 
-        promptAlert.sendKeys("Awesome!");
-        Reporter.log("Text entered in prompt alert |");
-        
-        //Assertion
-        Assert.assertEquals("This is a JavaScript Prompt!", alertText);
- 
-        promptAlert.accept();
-        Reporter.log("Alert closed |");
- 
-        Reporter.log("Test case ended |");
-    }
- 
-    @AfterClass
-    public void tearDown() {
-        Reporter.log("Ending Test |");
-        //Close the driver
-        driver.close();
-    }
 }

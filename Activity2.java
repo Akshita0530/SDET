@@ -1,58 +1,37 @@
-package Selenium_TestNG_xml_Activities;
+package Selenium_Live_Project_LMS;
 
 import org.testng.annotations.Test;
 
-import junit.framework.Assert;
 
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+
 
 public class Activity2 {
-	WebDriver driver;
-	WebDriverWait wait;
 	
-	@DataProvider(name = "Authentication")
-    public static Object[][] credentials() {
-    return new Object[][] { { "admin", "password" }};
-	}
-  @Test (dataProvider = "Authentication")
-  public void loginTestCase(String username, String password) {
-      //Find username and pasword fields
-      WebElement usernameField = driver.findElement(By.id("username"));
-      WebElement passwordField = driver.findElement(By.id("password"));
-      
-      //Enter values
-      usernameField.sendKeys(username);
-      passwordField.sendKeys(password);
-      
-      //Click Log in
-      driver.findElement(By.cssSelector("button[type='submit']")).click();
-      
-      //Assert Message
-      String loginMessage = driver.findElement(By.id("action-confirmation")).getText();
-      Assert.assertEquals(loginMessage, "Welcome Back, admin");
- 
-	  
-  }
-  @BeforeMethod
-  public void beforeMethod() {
-	        driver = new FirefoxDriver();
-	        wait = new WebDriverWait(driver, 10);
-	        
-	        //Open browser
-	        driver.get("https://www.training-support.net/selenium/login-form");
-  }
+	 public WebDriver driver;
+	
+	 @BeforeMethod
+	  public void OpenURL() {
+	  driver= new FirefoxDriver();
+	  driver.get("https://alchemy.hguy.co/lms"); 
+   }
+     @Test
+     public void VerifyHeading() {
+     
+      String ExpectedHeading = "Learn from Industry Experts";
+   	  String ActualHeading = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/main/article/div/section[1]/div[2]/section/div[2]/div[2]/div[2]/div/div/div/div/div[1]")).getAttribute("innerHTML");
+   	 if (ActualHeading.contains(ExpectedHeading)) {
+   		
+   	  System.out.println("The heading is verified");
+   	  driver.close();
+   	 }
 
-  @AfterMethod
-  public void afterMethod() {
-	//Close browser
-      driver.close();
-  }
 
+     }
 }
+
+
+
