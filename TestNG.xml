@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite parallel="false" name="Suite">
+ <listeners>
+        <!-- Custom Listener -->
+        <listener class-name="session19.CustomListener"/>
+    </listeners>
+  <test name="Test">
+   <parameter name="username" value="admin"/>
+        <parameter name="password" value="password"/>
+    <classes>
+      <class name="Selenium_TestNG_xml_Activities.Activity1"/>
+      <class name="Selenium_TestNG_xml_Activities.Activity2"/>
+      <class name="Selenium_TestNG_xml_Activities.Activity3"/>
+      <class name="Selenium_TestNG_xml_Activities.Activity4"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->

@@ -1,60 +1,57 @@
-package Selenium_TestNG_Activities;
+package Selenium_TestNG_xml_Activities;
 
 import org.testng.annotations.Test;
 
 import junit.framework.Assert;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.SkipException;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 
 public class Activity2 {
 	WebDriver driver;
-  @Test
-  public void testCase1() {
-	    //This test case will pass
-      String title = driver.getTitle();
-      System.out.println("Title is: " + title);
-      Assert.assertEquals(title, "Target Practice");
-  }
-  
-  @Test
-  public void testCase2() {
-      //This test case will Fail
-      WebElement blackButton = driver.findElement(By.cssSelector("button.black"));
-      Assert.assertTrue(blackButton.isDisplayed());
-      Assert.assertEquals(blackButton.getText(), "black");
-  }
-  
-  @Test(enabled = false)
-  public void testCase3() {
-      //This test will be skipped and not counted
-      String subHeading = driver.findElement(By.className("sub")).getText();
-      Assert.assertTrue(subHeading.contains("Practice"));
-  }
-  
-  @Test
-  public void testCase4() {
-      //This test will be skipped and will be be shown as skipped
-      throw new SkipException("Skipping test case");      
+	WebDriverWait wait;
+	
+	@DataProvider(name = "Authentication")
+    public static Object[][] credentials() {
+    return new Object[][] { { "admin", "password" }};
+	}
+  @Test (dataProvider = "Authentication")
+  public void loginTestCase(String username, String password) {
+      //Find username and pasword fields
+      WebElement usernameField = driver.findElement(By.id("username"));
+      WebElement passwordField = driver.findElement(By.id("password"));
+      
+      //Enter values
+      usernameField.sendKeys(username);
+      passwordField.sendKeys(password);
+      
+      //Click Log in
+      driver.findElement(By.cssSelector("button[type='submit']")).click();
+      
+      //Assert Message
+      String loginMessage = driver.findElement(By.id("action-confirmation")).getText();
+      Assert.assertEquals(loginMessage, "Welcome Back, admin");
+ 
+	  
   }
   @BeforeMethod
   public void beforeMethod() {
-	  //Create a new instance of the Firefox driver
-      driver = new FirefoxDriver();
-          
-      //Open the browser
-      driver.get("https://www.training-support.net/selenium/target-practice");
+	        driver = new FirefoxDriver();
+	        wait = new WebDriverWait(driver, 10);
+	        
+	        //Open browser
+	        driver.get("https://www.training-support.net/selenium/login-form");
   }
 
   @AfterMethod
   public void afterMethod() {
-	//Close the browser
+	//Close browser
       driver.close();
   }
 
