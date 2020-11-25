@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="REST Project 1.GitHub TestSuite" tests="1" failures="0" errors="0" time="1.099" package="REST Project 1" id="1">
+  <testsuite name="Project 2.SalesForce Project" tests="1" failures="0" errors="0" time="44.582" package="Project 2" id="1">
     <properties>
       <property name="install4j.launcherId" value="376"/>
       <property name="java.specification.version" value="15"/>
@@ -84,6 +84,6 @@
       <property name="install4j.swt" value="false"/>
       <property name="soapui.properties" value="soapui.properties"/>
     </properties>
-    <testcase name="TestCase" time="1.099"/>
+    <testcase name="SalesForce Project TestCase" time="44.582"/>
   </testsuite>
 </testsuites>
